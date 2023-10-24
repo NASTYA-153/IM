@@ -1,35 +1,35 @@
 #include <iostream> 
 #include <iomanip> 
 #include <vector> 
-#include <map> 
 #include <cmath>
 
 using namespace std;
 
 void generateHistogram(vector<double> data, int numBins) {
+
     double minVal = *min_element(data.begin(), data.end()); 
     double maxVal = *max_element(data.begin(), data.end());
 
-        // Создаем буфер для хранения частот
+        // РЎРѕР·РґР°РµРј РІРµРєС‚РѕСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‡Р°СЃС‚РѕС‚
         vector<int> histogram(numBins, 0);
     int totalCount = 0;
 
     for (double value : data) {
         int binIndex = static_cast<int>((value - minVal) / (maxVal - minVal) * numBins);
         if (binIndex == numBins) {
-            binIndex = numBins; // Учтем точки, которые равны maxVal
+            binIndex = numBins; // РЈС‡С‚РµРј С‚РѕС‡РєРё, РєРѕС‚РѕСЂС‹Рµ СЂР°РІРЅС‹ maxVal
         }
         if (binIndex >= 0 && binIndex < numBins) {
             histogram[binIndex]++;
         }
     }
 
-    // Вычисляем кол-во частот
+    // Р’С‹С‡РёСЃР»СЏРµРј РєРѕР»-РІРѕ С‡Р°СЃС‚РѕС‚
     for (int i = 0; i < numBins; i++) {
         totalCount += histogram[i];
     }
 
-    // Выводим гистограмму и кол-во частот
+    // Р’С‹РІРѕРґРёРј РіРёСЃС‚РѕРіСЂР°РјРјСѓ Рё РєРѕР»-РІРѕ С‡Р°СЃС‚РѕС‚
     for (int i = 0; i < numBins; i++) {
         double binStart = static_cast<double>(i) / numBins;
         double binEnd = static_cast<double>(i + 1) / numBins;
@@ -38,20 +38,20 @@ void generateHistogram(vector<double> data, int numBins) {
 
     cout << "\nTotal number of frequencies: " << totalCount << endl;
 
-    // Ожидаемое количество точек в каждом отрезке для равномерного распределения
+    // РћР¶РёРґР°РµРјРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕС‡РµРє РІ РєР°Р¶РґРѕРј РѕС‚СЂРµР·РєРµ РґР»СЏ СЂР°РІРЅРѕРјРµСЂРЅРѕРіРѕ СЂР°СЃРїСЂРµРґРµР»РµРЅРёСЏ
     int expectedCount = data.size() / numBins;
 
-    // Вычисляем статистику хи-квадрат
+    // Р’С‹С‡РёСЃР»СЏРµРј СЃС‚Р°С‚РёСЃС‚РёРєСѓ С…Рё-РєРІР°РґСЂР°С‚
     double chiSquare = 0.0;
     for (int count : histogram) {
         double deviation = count - expectedCount;
         chiSquare += (deviation * deviation) / expectedCount;
     }
 
-    // Число степеней свободы
+    // Р§РёСЃР»Рѕ СЃС‚РµРїРµРЅРµР№ СЃРІРѕР±РѕРґС‹
     int degreesOfFreedom = numBins - 1;
 
-    // Критическое значение для 0.05 уровня значимости и числа степеней свободы 19
+    // РљСЂРёС‚РёС‡РµСЃРєРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ 0.05 СѓСЂРѕРІРЅСЏ Р·РЅР°С‡РёРјРѕСЃС‚Рё Рё С‡РёСЃР»Р° СЃС‚РµРїРµРЅРµР№ СЃРІРѕР±РѕРґС‹ 19
     double criticalValue = 30.1;
 
     if (chiSquare < criticalValue) {
@@ -100,11 +100,11 @@ int main() {
 
     vector<double> fibDouble;
 
-    fibDouble.push_back(0.0); // добавляем начальное значение вектора fibDouble
+    fibDouble.push_back(0.0); // Р”РѕР±Р°РІР»СЏРµРј РЅР°С‡Р°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РІРµРєС‚РѕСЂР° fibDouble
 
     double minVal = 0.0;
 
-    double maxVal = pow(2, 63) - 1; // Максимальное значение для деления на интервалы
+    double maxVal = pow(2, 63) - 1; // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РґРµР»РµРЅРёСЏ РЅР° РёРЅС‚РµСЂРІР°Р»С‹
 
     for (int i = 0; i < 1000; i++) {
         double fibValue = static_cast<double>(generator.next()) / maxVal;
